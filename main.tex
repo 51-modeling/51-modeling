@@ -1,0 +1,117 @@
+\documentclass[withoutpreface,bwprint]{cumcmthesis} %去掉封面与编号页，电子版提交的时候使用。
+
+
+%\renewcommand\thepage{\zihao{-4} ~\arabic{page}~}%字体宋体，字号小四
+%\linespread{1}%1倍行距
+\usepackage{booktabs}%三线表必备
+\usepackage{appendix}
+% 其他奇怪的包
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc}
+
+
+
+
+
+
+\title{全国大学生数学建模竞赛编写的 \LaTeX{} 模板}
+\tihao{A}
+\baominghao{4321}
+\schoolname{XX大学}
+\membera{rya }
+\memberb{rya }
+\memberc{rya }
+\supervisor{ }
+\yearinput{2020}
+\monthinput{08}
+\dayinput{22}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+
+
+
+舞蹈风格和健康地方v那部分的看法v你发你的模块，fv
+
+
+\textbf{对于问题一：}sxy?
+
+\textbf{对于问题二：}
+
+\textbf{对于问题三：}
+
+\textbf{关键词:}
+\end{abstract}
+
+%目录  2019 明确不要目录，我觉得这个规定太好了
+%\tableofcontents
+
+%\newpage
+
+\section{问题重述}
+
+ \begin{problem}
+待观测天体S位于基准球面正上方，即$\alpha=0^{\circ}$，$\beta=90^{\circ}$时，结合考虑反射面板调节因素，确定理想抛物面。
+ \end{problem}
+ \begin{problem}
+待观测天体S位于$\alpha=36.795^{\circ}$，$\beta=78.169^{\circ}$时，确定理想抛物面，并建立反射面板调节模型，调节相关促动器的伸缩量，使反射面板尽量贴近该理想抛物面。给出理想抛物面的顶点坐标，以及调节后反射面300米口径内的主索节点编号和坐标，各促动器的伸缩量等结果。
+ \end{problem}
+ \begin{problem}
+基于第二问得到的调节方案，计算馈源舱的接收比，即馈源舱接收到的反射信号与反射面的反射信号之比，并与基准反射球面的接收比作比较。
+\end{problem}
+
+\section{问题分析}
+
+\section{模型假设}
+\begin{enumerate}
+    \item 基准态下，所有主索节点均位于基准球面上。
+    \item 每一块反射面板均为基准球面的一部分。反射面板上开有许多直径小于5毫米的小圆孔，由于小圆孔直径小于待观测天体发射的电磁波波长，不影响对电磁波的反射，所以可以认为面板无孔。
+    \item 电磁波信号及反射信号均视为直线传播。
+\end{enumerate}
+\section{符号说明}
+\begin{table}[H] %开始table相关的指令
+    \begin{center} %整个表格居中
+    \caption{符号说明} %将该表格命名为#（与下面的#没关系）
+    \begin{tabular}{cl} %开始进行表格部分的设置
+    %此处表格有几列就有几个#，此处以两列为例
+    %其中#可以是l,c,r(分别表示该列中所有元素居左，中，右)
+        \toprule %设置顶线,接下来设置表格的内容
+        \multicolumn{1}{m{3cm}}{\centering 符号} %赋予从左往右数的一列以第一等级的标题A
+        & \multicolumn{1}{m{10cm}}{ 含义} %这里表示紧接着前面的那一列的接下来三列合并并规定长度为六厘米
+        \\ %换行开始定义表格具体内容
+        \midrule %赋予第一等级的中线
+        $a$	&抛物面的二次系数的倒数\\
+        $b$	&抛物面的顶点的$z$轴坐标\\
+        $\alpha$	&方位角\\
+        $\beta$	&仰角\\
+        $R$	&基准球面半径\\
+         \bottomrule
+        \end{tabular} \label{tb:符号说明}%结束表格内容部分设置并赋予该部分内容以标签tb:notations
+    \end{center} %结束整体居中处理部分的定义
+\end{table} %结束table相关的指令
+
+
+\section{问题一模型建立与求解}
+
+
+
+
+
+\section{问题二模型建立与求解}
+
+
+
+
+\begin{appendices}
+ryatql
+ 
+\end{appendices}
+
+\end{document} 
