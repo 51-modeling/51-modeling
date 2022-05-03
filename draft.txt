@@ -1,0 +1,27 @@
+A:
+1. 感染者分布不平均，会集中（家人、同楼面、楼栋）
+2. 假阳性、复核
+3. 假设复核（假阴性、假阳性）
+4. 假设核酸检测率为100%，即不考虑假阴假阳情况
+5. (问题3)封控期间传染
+6. Maximum Acceptable Pooling Size：32
+7. 评价标准可以用这个：highest number of specimens screened per test used
+8. （问题3）可测出窗口期（e.g. 染病后3-7日）会随着混检下降
+
+
+
+最新的计算器：http://www.bios.unc.edu/~mhudgens/SARS-CoV-2.pooling.2.htm
+
+
+!!!!!另一方面里面的rho改成常数qqq/x
+
+
+BIOSTATISTICS OF POOLING
+As As noted elsewhere, the biostatistics of pooling are complex. For details, we suggest starting with:
+• Bilder C, Iwen P, Abdalhamid B, Tebbs J, and McMahan C. (2020). Tests in short supply? Try group testing. Significance 17(3), 15-16
+• Bilder C. (2019). Group testing for estimation. Wiley StatsRef: Statistics Reference Online. https:// doi.org/10.1002/9781118445112.stat08231
+• Bilder C. (2019). Group testing for identification. Wiley StatsRef: Statistics Reference Online. https:// doi.org/10.1002/9781118445112.stat08227
+and then additional, more technical literature including:
+• Kim HY, Hudgens MG, Dreyfuss JM, Westreich DJ, Pilcher CD. Comparison of group testing algorithms for case identification in the presence of test error. Biometrics. 2007 Dec;63(4):1152- 63. doi: 10.1111/j.1541-0420.2007.00817.x. PMID: 17501946
+• Litvak E, Tu XM and Pagano M, 1994. Screening for the presence of a disease by pooling sera samples. Journal of the American Statistical Association, 89(426), pp.424-434.
+• Johnson NL, Kotz S, and Wu X. (1991). Inspection Errors for Attributes in Quality Control. New York: Chapman and Hall Ltd.

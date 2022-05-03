@@ -142,7 +142,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setmainfont{Times New Roman}
 %\setmonofont{Courier New}
 \setsansfont{Arial}
-\setCJKfamilyfont{song}[AutoFakeBold]{SimSun}
+\setCJKfamilyfont{song}[AutoFakeBold]{heiti}
 \newcommand*{\song}{\CJKfamily{song}}
 
 \renewcommand\normalsize{%
