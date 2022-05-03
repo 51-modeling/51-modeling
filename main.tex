@@ -31,9 +31,9 @@
 
 
 
-\title{全国大学生数学建模竞赛编写的 \LaTeX{} 模板}
+\title{全国大学生数学建模竞赛编写的 \LaTeX{} 模板}%TODO
 \tihao{A}
-\baominghao{4321}
+\baominghao{4321}%TODO check
 \schoolname{复旦大学}
 \membera{孙夏炀 }
 \memberb{任逸昂}
@@ -46,17 +46,15 @@
 \begin{document}
 
 \maketitle
-\begin{abstract}
+\begin{abstract}%TODO
 
 
+为提高效率节省资源，在大规模进行核酸检测筛查新冠感染者时，应根据情况合理设计混合检测策略。
 
-舞蹈风格和健康地方v那部分的看法v你发你的模块，fv
+\textbf{对于问题一：}
+在模型一中，首先我们假设感染者均匀分布，故对待检测区域依照一定区划进行划分，使得小划分内呈现相对平均的感染者分布。我们区分了检测能力充足、有限和严重不足三种情况，并对每种情况权衡了\textbf{尽可能找到更多感染者}和\textbf{尽可能少检测}两种目标，整合为优化问题求解。由于相应优化问题难以求取解析解，我们使用了牛顿法和分支界定法求得数值解。
 
-
-sdfuigfxuicxghujiccvhjicvbh
-
-\textbf{对于问题一：}sxy?
-woascilsdhv
+针对模型一中检测能力充足的情况假设，我们将核酸检测错误率、混检的稀释作用等纳入考量，建立了模型二。模型二中使用\textbf{诊断某一人感染情况所需检测次数的期望}作为目标函数，建立优化问题求解。由于最高混检数量有限\cite{bib1}，该优化问题可能解有限，故采用枚举法即可求解。以美国纽约市Bronx区为例(2022年1月29日检测阳性率为5\%)，计算得出\textbf{最佳混检样本大小为6}，平均每人检测量为0.5161。\\
 \textbf{对于问题二：}
 
 \textbf{对于问题三：}
@@ -92,17 +90,25 @@ woascilsdhv
 \end{problem}
 
 \section{问题分析}
+\subsection{问题一分析}
+针对问题一，建立了两个模型探讨多少人一组进行混检是比较理想的。
+在模型一中，讨论了在新冠检测能力充足、有限及严重不足的不同条件下的最佳混检策略。为此，在固定阳性率下，建立了非线性整数规划模型来探讨混检样本数量对最终检测总数与测得阳性量期望的关系。并运用牛顿迭代法求得其数值解。
+在模型二中，进一步将核酸检测错误率、混检的稀释作用等纳入考量，将诊断某一人感染情况所需检测次数的期望值作为最优混检策略的评价指标。并运用枚举法根据各地区各时间不同阳性率得到相应的不同的混检策略。
 
+\subsection{问题二分析}
+针对问题二，我们首先应寻找恰当的样本，随后利用问题一中给出的模型求解最优的混检策略。在问题一给出的两种模型中，均假设了新冠感染者的平均分布，与待检测样本相关的参数仅有平均阳性率。因此，我们找到了美国纽约市2022年1月26日至4月26日各区新冠检测阳性率数据作为样本。当地政府目前并没有疫情管制措施，但很多公司要求员工定期进行新冠检测。一些大学，例如哥伦比亚大学，更有每周随机抽检学生调研阳性率的要求\cite{columbia}。故该数据可以作为当地新冠病毒的平均感染率之合理估计。将这些数据代入建立的两个模型即可得出对应条件下建议混检方案。
+
+\subsection{问题三分析}%TODO
+针对问题三，balabala
 \section{模型假设}
 \begin{enumerate}
-    \item 假设核酸检测率为100\%，即不考虑假阴假阳情况（delete
-    \item 假设单只采样管最大收集样本数为32\cite{\...}；
-    \item 假设某地区根据行政规划可划分为$N$各区域：$\{\Omega_k \vert 1 \leqslant k \leqslant N  \}$；
-    \item 假设诸地区$\Omega_k$人口数$n_k$远大于单只采样管最大收集样本数。；
-    \item 假设在诸$\Omega_k$进行$x_k$人一管混合采样，如$x_k\nmid n_k$,则最后$n_k-\left[\dfrac{n_k}{x_k}\right[\cdot x_k]$人编为一组混测核酸。由于$n_k \gg x_{max} \geqslant x_k \geqslant n_k-\left[\dfrac{n_k}{x_k}\right]\cdot x_k$,该组对整体检测速度影响可忽略；
-    \item 假设诸地区$\Omega_k$第$t$天的阳性感染者分布均匀（存在平均感染率$\rho_k$）；
-    
+    \item 假设单只采样管最大收集样本数为32\cite{max_maps}；
+    \item 假设某地区根据行政规划可划分为不同区域；
+    \item 假设各个地区的人口数远大于单只采样管最大收集样本数；
+    \item 假设各个地区阳性感染者分布均匀；
+    \item 忽略核算检测速度。
 \end{enumerate}
+
 \section{符号说明}
 \begin{table}[H] %开始table相关的指令
     \begin{center} %整个表格居中
@@ -115,27 +121,22 @@ woascilsdhv
         & \multicolumn{1}{m{10cm}}{ 含义} %这里表示紧接着前面的那一列的接下来三列合并并规定长度为六厘米
         \\ %换行开始定义表格具体内容
         \midrule %赋予第一等级的中线
-        $\Omega_k$	&抛物面的顶点的$z$轴坐标\\
-        $x$	&混检混合样本量（模型1）\\
-        $x_k$  &地区$\Omega_k$混检混合样本量（模型2）\\
+        $\Omega_k$	&第$k$个区域\\
+        $x_k$  &地区$\Omega_k$混检混合样本量\\
         $\rho_k(t)$	&第t天地区$\Omega_k$的阳性平均感染率\\
-        $\rho_k$    &对$\rho_k(t)$的缩写（模型2） \\
-        $\rho_e$	&混检异常的情况下复检阳性的平均感染率\\
+        $\rho^*_k(t)$ &第t天地区$\Omega_k$的（考虑潜伏期后）实际阳性平均感染率 \\
+        %$\rho_k$    &对$\rho_k(t)$的缩写（模型2） \\
+        %$\rho_e$	&混检异常的情况下复检阳性的平均感染率\\
         $n_k$       &地区$\Omega_k$混检样本的大小（人口数）\\
         $w_0$       &最大检测量\\
         $w$	        &检测能力充足时最小检测数\\
-        $w_k$       &地区$\Omega_k$的混检量与复检量的总和 \\
-        $u_k$       &地区$\Omega_k$的混检量\\
-        $v_k$       &地区$\Omega_k$的复检量\\
+        %$w_k$       &地区$\Omega_k$的混检量与复检量的总和 \\
+        %$u_k$       &地区$\Omega_k$的混检量\\
+        %$v_k$       &地区$\Omega_k$的复检量\\
         $z$         &所有地区单日复检阳性人数的总和\\
-        $P_{TP}$    &检测呈阳性实际为阳性（真阳性）的概率\\
-        $P_{FP}$    &检测呈阳性实际为阴性（假阳性）的概率\\
-        $P_{TN}$    &检测呈阴性实际为阴性（真阴性）的概率\\
-        $P_{FN}$    &检测呈阴性实际为阳性（假阴性）的概率\\
-        $TPR$       &真阳性占检测呈阳性总人数之比 \\
+        $TPR'$      &考虑混检稀释作用后的真阳性占检测呈阳性总人数之比 \\
         $TNR$       &真阴性占检测呈阴性总人数之比 \\
-        $S_{kj}(x_k)$ &地区$\Omega_k$第$j$批人一次检测可确定此组个体具体感染情况的人数 \\
-        $S_{k}(x_k)$ &地区$\Omega_k$一次检测可确定此此地区个体具体感染情况的人数\\
+        $S_k(x_k)$    &诊断某一人感染情况所需检测次数 \\
          \bottomrule
         \end{tabular} \label{tb:符号说明}%结束表格内容部分设置并赋予该部分内容以标签tb:notations
     \end{center} %结束整体居中处理部分的定义
@@ -150,18 +151,17 @@ woascilsdhv
 
 假设对诸区域$\Omega_k$，施行$x_k$人一组混合检测（若$x_k$不是$n_k$的因数，对$\dfrac{n_k}{x_k}$作向上取整）；
 
-假设对诸区域$\Omega_k$，第$t$天平均阳性率为$\rho_k(t)$，那么对诸区域在一组人中存在阳性的平均概率为：$1-(1-\rho_k(t))^{x_k}$，即对于每组人复检数量期望为：$(1-(1-\rho_k(t))^{x_k})x_k$，那么在整个样本中，复检数量期望：为$n_k(1-(1-\rho_k(t))^{x_k})$。
+假设对诸区域$\Omega_k$，第$t$天平均阳性率为$\rho_k(t)$，那么对诸区域在一组人中存在阳性的平均概率为：$1-(1-\rho_k(t))^{x_k}$，即对于每组人复检数量期望为：$(1-(1-\rho_k(t))^{x_k})x_k$，那么在整个样本中，复检数量期望为：$n_k(1-(1-\rho_k(t))^{x_k})$。
 
-首先如果不考虑检测资源体量有限的要求，此假设下我们要使检测数达到最少，即求诸$x_k(k=1,2,...,N)$，
+首先如果不考虑检测资源体量有限的要求，此假设下我们要使检测数达到最少
 
-然而实际上对实验室
-核酸采样一次所需时间约6小时，故当疫情社会面扩散时单日最大检测量往往不能满足所需检测量，因此我们需要对检测资源的分配进行决策。事实上不同地区阳性率分布不均，阳性感染者增长率也不同，所以决策时应视地区的严重程度分配不同的资源，应将更多的检测资源，特别是复检的资源放在感染者增长率高的地区，才能更有效得筛出阳性感染者，阻断疫情传播。
+然而实际上故当疫情社会面扩散时在无增援的情况下，单日最大检测量往往不能满足所需检测量，因此我们需要对检测资源的分配进行决策。事实上不同地区阳性率分布不均，阳性感染者增长率也不同，所以决策时应视地区的严重程度分配不同的资源，应将更多的检测资源，特别是复检的资源放在感染者增长率高的地区，才能更有效得筛出阳性感染者，阻断疫情传播。
 
 \textbf{因此我们所需求解的最优解决方包括：}
 \begin{itemize}
-    \item 当检测资源充足时，求不同地区最优的混检混合样本数，使得混检与复检总检测次数最少；
-    \item 当检测资源严重不足时，求不同地区最优的混检混合样本数，以及每天分配在诸地区的混检与复检量，使得所有地区当天能筛查出阳性感染者总数最多；
-    \item 当检测资源相对不足时，求不同地区最优的混检混合样本数，以及每天分配在诸地区的混检与复检量，使得所有地区在保证全员做一次混检的前提下，当天能筛查出阳性感染者总数最多。
+    \item 当检测资源充足时，求不同地区最优的混检混合样本数$x_k$，使得混检与复检$w$总检测次数最少；
+    \item 当检测资源严重不足时，求不同地区最优的混检混合样本数$x_k$，以及每天分配在诸地区的混检量$u_k$与复检量$v_k$，使得所有地区当天能筛查出阳性感染者总数$z$最多；
+    \item 当检测资源相对不足时，求不同地区最优的混检混合样本数$x_k$，以及每天分配在诸地区的混检量$u_k$与复检量$v_k$，使得所有地区在保证全员做一次混检的前提下，使得当天能筛查出阳性感染者总数$z$最多。
 \end{itemize}
 
 进一步，假设可用的最大检测量为$w_0$；
@@ -280,7 +280,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 \label{pro1}
 \end{figure}
 
-如上图所示，曲线展示了最优混检混合样本数随某地区平均阳性率的变化关系的一个例子——取定$\rho_k(t-1)=0$，取横坐标为$\rho_k(t)$，纵坐标为最优混检混合样本$x$.可以看到$x$随$\rho_k(t)$的增大而减小.当$\rho_k(t)<0.5\%$时，病毒感染率极低，单管样本数过少则资源浪费过大，因此$x$可取的较大；当$\rho_k(t) \geqslant 0.5\%$时，病毒感染率增大，则需开始削减单管样本数；同时当$x$取10附近的值时，$\rho_k(t)$的取值也约在$0.1\% \~ 0.15\%$，此即2022年上海疫情中Covid-19 Omicron的阳性感染率，因此模型结果是符合事实的
+如上图所示，曲线展示了最优混检混合样本数随某地区平均阳性率的变化关系的一个例子——取定$\rho_k(t-1)=0$，取横坐标为$\rho_k(t)$，纵坐标为最优混检混合样本$x$.可以看到$x$随$\rho_k(t)$的增大而减小.当$\rho_k(t)<0.5\%$时，病毒感染率极低，单管样本数过少则资源浪费过大，因此$x$可取的较大；当$\rho_k(t) \geqslant 0.5\%$时，病毒感染率增大，则需开始削减单管样本数；同时当$x$取10附近的值时，$\rho_k(t)$的取值也约在$0.1\% \sim 0.15\%$，此即2022年上海疫情中新冠病毒奥密克戎变种的阳性感染率，因此模型结果是符合事实的
 
 \subsubsection{第二种情况}
 对于方程6，显然要使得$z$最大，则$v_k$需尽可能大，此时方程6中的不等式均取边界条件，得到：
@@ -409,7 +409,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 
 该地区施行$x_k$人一组混合检测（若$x_k$不是$n_k$的因数，对$\dfrac{n_k}{x_k}$作向上取整）；
 
-假设核酸有出错率，即可能存在真阳性(TP)、假阴性(FN)、假阳性(FP)、真阴性(TN)四种情况，其对应的概率分别为$P_{TP},P_{FN},P_{FP},P_{TN}$.令检测结果阳性的感染者与所有感染者人数之比为$TPR$ (Positive Predictive Value, aka. Sensitivity)，检测结果阴性的非感染者与所有非感染者之比为$TNR$ (True Negative Rate, aka. Specificity)，得到：
+假设核酸并非完全准确，即可能存在真阳性(TP)、假阴性(FN)、假阳性(FP)、真阴性(TN)四种情况，其对应的概率分别为$P_{TP},P_{FN},P_{FP},P_{TN}$.令检测结果阳性的感染者与所有感染者人数之比为$TPR$ (Positive Predictive Value, aka. Sensitivity)，检测结果阴性的非感染者与所有非感染者之比为$TNR$ (True Negative Rate, aka. Specificity)，得到：
 
 \begin{align}
 \label{TPR}
@@ -418,7 +418,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 \end{align}
 
 % citation to be added
-C.D. Pilcher et al (2020)\cite{CDP}指出,在混检核酸时TPR会随着混检池$x_k$增大而降低至$TPR_k$。根据其研究，具体对应关系为：
+C.D. Pilcher et al (2020)\cite{bib1}指出,在混检核酸时TPR会随着混检池$x_k$增大而降低至$TPR_k$。根据其研究，具体对应关系为：
 \begin{align}
     TPR_k=TPR\cdot (1-\dfrac{\log_{10}x_k}{7})
 \end{align}
@@ -484,7 +484,7 @@ $\forall x_k$，成立：
 \end{theorem}
 
 \begin{proof}
-    假设地区$\Omega_k$第$j$批人$(k\leqslant N,1 \leqslant j \leqslant \dfrac{n_k}{x_k})$总共需做$l_j$次核算检测。
+    假设地区$\Omega_k$第$j$批人$(k\leqslant N,1 \leqslant j \leqslant \dfrac{n_k}{x_k})$总共需做$l_j$次核酸检测。
     \begin{align*}
         E[S_k(x_k)]&=\dfrac{\sum\limits^{n_k/x_k}_{j=1} E[S_{kj}(x_k)]\cdot l_j }{\sum\limits^{n_k/x_k}_{j=1} l_j}  
         =\dfrac{E[S_{kj}(x_k)]\cdot \sum\limits^{n_k/x_k}_{j=1} l_j }{\sum\limits^{n_k/x_k}_{j=1} l_j}
@@ -500,26 +500,32 @@ $\forall x_k$，成立：
 综上，原问题简化为：
 \begin{align}
 \label{OMG}
-    \operatorname*{\rm argmin}_{2\leqslant x_k \leqslant 32,x_k\in\mathbb{Z}^+}\dfrac{x_k+1}{x_k}\cdot (P_{TP}+P_{FP})+\dfrac{1}{x_k}\cdot (P_{TN}+P_{FN})
+    \operatorname*{\rm argmin}_{2\leqslant x_k \leqslant 32,x_k\in\mathbb{Z}^+}n_k\cdot\left(\dfrac{x_k+1}{x_k}\cdot (P_{TP}+P_{FP})+\dfrac{1}{x_k}\cdot (P_{TN}+P_{FN})\right)
 \end{align}
-其中$P_{TP}$、$P_{FP}$、$P_{TN}$和$P_{FN}$均为常数，由式\ref{TPR}到式\ref{FN}给出。%这句有必要吗
+其中$P_{TP}$、$P_{FP}$、$P_{TN}$和$P_{FN}$由式\ref{TPR}到式\ref{FN}给出。%这句有必要吗
 
 \subsection{模型二求解准备}
 \subsubsection{枚举法}
-将问题的所有可能的答案一一列举，然后逐次比较各答案，选择出最优结果。\cite{bib3}
+将问题的所有可能的答案一一列举，然后逐次比较各答案，选择出最优结果。
 \subsection{模型二求解}
-要达成式24，即求解$x_k(1\leqslant k \leqslant N)$,s.t.
+要达成式\ref{OMG}，即求:
 \begin{align}
-    \operatorname*{\rm max}_{2\leqslant x_k \leqslant 32,x_k\in\mathbb{Z}^+}\dfrac{x_k}{x_k+1} ( (1-2(1-\rho_k)^{x_k})TPR+ (1-\rho_k)^{x_k})+x_k (1-\rho_k)^{x_k} TNR
+    \operatorname*{\rm argmin}_{2\leqslant x_k \leqslant 32,x_k\in\mathbb{Z}^+}n_k\cdot\left(\dfrac{x_k+1}{x_k}\cdot (P_{TP}+P_{FP})+\dfrac{1}{x_k}\cdot (P_{TN}+P_{FN})\right)
 \end{align}
 本模型依旧可以通过求一阶导利用牛顿法解，但枚举的复杂度仅为$O(n)$，因此直接枚举解即可。
 
 我们将$x_k$从2枚举至32，依次计算式\ref{OMG}中argmax内代数式的值，从中选取使该式取到最大值的$x_k$作为结果。
-
+以下为$TPR=95\%$, $TNR=99\%$时，本模型对部分阳性率$\rho_k$区间给出的最佳混检池大小$x_k$：
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{model2_sample.png}
+%\caption{阳性率给定，推荐混检混合样本量}
+\label{model2_sample}
+\end{figure}
 \section{问题二的求解}
-截止2022年4月底，美国累计确诊人数超过8000万人。使用美国纽约市2022年1月26日至4月26日Bronx、Brooklyn、Manhattan、Queens、Staten Island这5个区域（从前至后依次为为$\Omega_1,\Omegan_2,...,\Omega_5$）的数据，对纽约市设计混检方案。
+截止2022年4月底，美国累计确诊人数超过8000万人。使用美国纽约市2022年1月26日至4月26日Bronx、Brooklyn、Manhattan、Queens、Staten Island这5个区域（从前至后依次为为$\Omega_1 ,\Omega_2 ,...,\Omega_5$）的数据，对纽约市设计混检方案。
 
-已下为5个区域的各自的人口数（从左至右依次为$n_1,n_2,...,n_5$）：
+以下为5个区域的各自的人口数（从左至右依次为$n_1,n_2,...,n_5$）：
 
 \begin{table}[H]
 \centering
@@ -532,13 +538,13 @@ $\forall x_k$，成立：
 \end{tabular}
 \caption{纽约市各区人口数}
 \end{table}
-纽约市迄今没对全民做过核酸检测，所得“感染率”实际为样本平均值\cite{??}，公式如下：
+纽约市迄今没对全民做过核酸检测，所得“感染率”实际为样本平均值，公式如下：
 \begin{align*}
   \rho_k(t)=  \dfrac{\mbox{当天} \Omega_{k} \mbox{阳性感染者人数}}{\mbox{当天} \Omega_{k} \mbox{参与核检总人数}}\times 100\%
 \end{align*}
 但我们仍可以该样本平均值反应总体平均值.
 
-已下展示部分日期各区每日的感染率（完整数据见附录）：
+已下展示部分日期各区每日的感染率（完整数据见支撑材料）：
 \begin{table}[H]
 \centering
 \begin{tabular}{cccccc}
@@ -550,30 +556,15 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 01/28/2022 & 6     & 6.53     & 5.68      & 8.79   & 10.32         \\
 01/29/2022 & 5.56  & 6.06     & 5.44      & 8.18   & 9.63          \\
 01/30/2022 & 5.25  & 5.62     & 5.23      & 7.66   & 9.08          \\
-01/31/2022 & 5.14  & 5.02     & 4.72      & 6.79   & 8.27          \\
-02/01/2022 & 4.94  & 4.65     & 4.35      & 6.33   & 7.86          \\
-02/02/2022 & 4.41  & 4.26     & 4.01      & 5.9    & 7.34          \\
-02/03/2022 & 4.05  & 3.77     & 3.65      & 5.26   & 6.3           \\
-02/04/2022 & 3.79  & 3.47     & 3.44      & 4.75   & 5.81          \\
-02/05/2022 & 3.8   & 3.52     & 3.41      & 4.77   & 5.81          \\
-02/06/2022 & 3.67  & 3.36     & 3.29      & 4.59   & 5.61          \\
-02/07/2022 & 2.78  & 3.1      & 3.08      & 4.21   & 5.05          \\
-02/08/2022 & 2.46  & 2.83     & 2.85      & 3.8    & 4.58          \\
-02/09/2022 & 2.28  & 2.53     & 2.62      & 3.4    & 4.2           \\
-02/10/2022 & 2.03  & 2.26     & 2.47      & 3.19   & 4.02          \\
-02/11/2022 & 1.89  & 2.11     & 2.32      & 2.9    & 3.74          \\
-02/12/2022 & 1.79  & 2.03     & 2.27      & 2.75   & 3.65          \\
-02/13/2022 & 1.76  & 1.92     & 2.18      & 2.6    & 3.42          \\
-02/14/2022 & 1.6   & 1.83     & 2.12      & 2.38   & 3.22          \\ 
 ......     & ...... &...... &...... &...... &...... \\
 \bottomrule
 \end{tabular}
-\caption{2022.1.26-2022.2.14每日纽约市各区阳性感染率}
+\caption{2022.1.26-2022.1.30每日纽约市各区阳性感染率}
 \end{table}
 设1月26日对应$t=1$，假设纽约市对样本的检测能力是充足的。
 
 \subsection{利用模型一求解}
-套用模型一中的情况一，得到每个地区最优的混检采样样本数$x_k$以及每日最小检测次数${\rm \~min}w$随$t$的变化如图所示：
+套用模型一中的情况一，得到每个地区最优的混检采样样本数$x_k$以及每日最小检测次数$\rm{min}\:w$随$t$的变化如图所示：
 \begin{figure}[H]
 \centering
 \subfigure{
@@ -688,34 +679,37 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 
 这些图反映了要使$w$取最小，应当根据当日不同地区新增感染率情况施行不同的混检方案，例如第32天Bronx、Brooklyn施行6人混检，其他地区施行8人混检。
 
-从图中还可以看到，根据纽约3个月疫情蔓延的形势，在检测资源充足的情况下，绝大多数日期宜采取6人混检的方案，少数天可调整方案至8人混检或3人混检，而根据统计平均的结果，而在相应方案下单日最小检测数月在$4 \times 10^6$左右.
+从图中还可以看到，根据纽约3个月疫情蔓延的形势，在检测资源充足的情况下，绝大多数日期宜采取6人混检的方案，少数天可调整方案至8人混检或3人混检，而根据统计平均的结果，而在相应方案下单日最小检测数在$4 \times 10^6$左右.
 
-由于美国并没有采取“动态清零”的疫情防控策略，疫情的蔓延趋势在未来一定时间内仍将维持现状，因此根据模型的解，建议纽约市目前采取6人混检的方案，若纽约市日后也想采取严格的疫情防控以及全民核酸筛查程序，相关部门最好可以调配至少$4 \times 10^6$单日检测力量。
+由于美国并没有采取“动态清零”的疫情防控策略，疫情的蔓延趋势在未来一定时间内仍将维持现状，因此根据模型的解，建议纽约市目前采取6人混检的方案，若纽约市日后也想采取严格的疫情防控以及全民核酸筛查程序，相关部门最好可以调配至少$4 \times 10^6$次/日的单日检测力量。
 
 \subsection{利用模型二求解}
 
 
 
-将数据代入已经建立好的模型二，得到每个地区最优的混检采样样本数$x_k$以及每日最小检测次数${\rm \~min}w$随$t$的变化如图所示：
+将数据代入已经建立好的模型二，得到每个地区最优的混检采样样本数$x_k$以及每日最小检测次数$\rm {min}\:w$随$t$的变化如图所示：
 \begin{figure}[H]
 \centering
 \subfigure{
 		\begin{minipage}[t]{0.4\linewidth}
 			\centering          %子图居中
-			\includegraphics[scale=0.3]{nyc_Bronx_pool_size.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Bronx_pool_size.png}  
+            \vspace{-0.5cm}
 			\caption*{\quad \small{$x_1$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \subfigure{		
         \begin{minipage}[t]{0.4\linewidth}
-			\includegraphics[scale=0.3]{nyc_Bronx_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+            \centering
+			\includegraphics[scale=0.4]{nyc_Bronx_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{\rm{min} $w_2$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \caption{Bronx地区1月26日至4月26日每日的最理想混检方案} %  %大图名称
-\label{fig:1}  %图片引用标记
+
 \end{figure}
 
 \begin{figure}[H]
@@ -723,20 +717,21 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 \subfigure{
 		\begin{minipage}[t]{0.4\linewidth}
 			\centering          %子图居中
-			\includegraphics[scale=0.3]{nyc_Brooklyn_pool_size.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Brooklyn_pool_size.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{$x_2$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \subfigure{		
         \begin{minipage}[t]{0.4\linewidth}
-			\includegraphics[scale=0.3]{nyc_Brooklyn_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Brooklyn_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{\rm{min} $w_2$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \caption{Brooklyn地区1月26日至4月26日每日的最理想混检方案} %  %大图名称
-\label{fig:1}  %图片引用标记
 \end{figure}
 
 \begin{figure}[H]
@@ -744,20 +739,22 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 \subfigure{
 		\begin{minipage}[t]{0.4\linewidth}
 			\centering          %子图居中
-			\includegraphics[scale=0.3]{nyc_Manhattan_pool_size.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Manhattan_pool_size.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{$x_3$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \subfigure{		
         \begin{minipage}[t]{0.4\linewidth}
-			\includegraphics[scale=0.3]{nyc_Manhattan_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Manhattan_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
+			\vspace{-0.5cm}
 			\caption*{\quad \small{\rm{min} $w_3$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \caption{Manhattan地区1月26日至4月26日每日的最理想混检方案} %  %大图名称
-\label{fig:1}  %图片引用标记
+
 \end{figure}
 
 \begin{figure}[H]
@@ -765,20 +762,22 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 \subfigure{
 		\begin{minipage}[t]{0.4\linewidth}
 			\centering          %子图居中
-			\includegraphics[scale=0.3]{nyc_Queens_pool_size.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Queens_pool_size.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{$x_4$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \subfigure{		
         \begin{minipage}[t]{0.4\linewidth}
-			\includegraphics[scale=0.3]{nyc_Queens_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Queens_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{\rm{min} $w_4$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \caption{Queens地区1月26日至4月26日每日的最理想混检方案} %  %大图名称
-\label{fig:1}  %图片引用标记
+
 \end{figure}
 
 \begin{figure}[H]
@@ -786,20 +785,22 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 \subfigure{
 		\begin{minipage}[t]{0.4\linewidth}
 			\centering          %子图居中
-			\includegraphics[scale=0.3]{nyc_Staten Island_pool_size.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Staten Island_pool_size.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{$x_5$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \subfigure{		
         \begin{minipage}[t]{0.4\linewidth}
-			\includegraphics[scale=0.3]{nyc_Staten Island_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
-            \vspace{-1cm}
+			\includegraphics[scale=0.4]{nyc_Staten Island_tests_to_be_conducted.png}   %以pic.jpg的0.4倍大小输出
+            \vspace{-0.5cm}
 			\caption*{\quad \small{\rm{min} $w_5$随日期$t$的变化曲线图}}
+			\vspace{-0.1cm}
 		\end{minipage}
 }
 \caption{Staten\ Island地区1月26日至4月26日每日的最理想混检方案} %  %大图名称
-\label{fig:1}  %图片引用标记
+
 \end{figure}
 
 \begin{figure}[H]
@@ -809,28 +810,112 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
 \label{pro1}
 \end{figure}
 
-
+% 到此为止检查过 之前有问@5/3 1629 lty
 \section{问题三模型的建立与求解}
-约定多轮检查的意义为：没进行一轮混检则对异常批次进行一次复检，每天重复多次这样的操作。
-上文中提到，检测可能出现假阳性和假阴性，故多轮混检可以降低检错的概率，下对模型进一步调整.
+多轮检测的意义在于筛查出处于实际易感染但由于鼻咽部病毒载量（Nasopharynx viral load）过低在某轮检测中未被发现的感染者，本文后续称为U类感染者（注：潜伏期感染者是指尚未有症状的感染者，有可能已被判定为阳性，本文后续称为I类感染者）。而我们之前的模型中$\rho_k(t)$仅考虑当日可被查出的感染者，因此当日实际的感染率与$\rho_k(t)$有差异。
+
+不妨设当日实际感染率为$\rho^*_k(t)$，则$\rho^*_k(t)$可能与$\rho_k(t)$,$\rho_k(t-1)$,...,$\rho_k(1)$相关，即：
+\begin{align}
+    \rho^*_k(t) = F\left(\rho_k(t),\rho_k(t-1),...,\rho_k(1) \right)
+\end{align}
+
+设判定为阳性的病毒载量为$a$，确诊最低病毒载量为$A$，不妨假设诸个体$\lambda$病毒载量一开始呈指数分布，设系数为$s_\lambda$，令设其第$t_\lambda$天低PCR指数到达$a$，第$T_\lambda$天低PCR指数到达$A$，则有：
+\begin{align}
+\left\{
+\begin{aligned}
+    & s^{t_\lambda}_{\lambda}=m; \\
+    & s^{T_\lambda}_{\lambda}=M; 
+\end{aligned}
+    \right.
+    \Rightarrow & \dfrac{T_\lambda}{t_\lambda}=\dfrac{\ln A}{\ln a}=c
+\end{align}
+通俗来说即：确诊时间与到达阳性时间之比为定值，与个体无关。
+
+令$P(t-1<\xi \leqslant t)$表示潜伏期为$t$天的概率，假设$\xi$服从分布的密度函数为$f(t)$给定（可由统计得到），令设$P(t-1< \eta \leqslant t)$表示确定为阳性需$t$天的概率，故$\eta$服从分布的密度函数为$f(ct)$.
+
+第$t-1$天未被判定为阳性的感染者的比例为$\rho^*_k(t-1)-\rho_k(t-1)$，得递推式：
+\begin{align}
+\left\{
+\begin{aligned}
+    & \rho^*_k(1),\rho_k(1)\quad {\rm given.}\\
+    & \rho^*_k(2) =\int^1_0 f(cx)dx\cdot \left(\rho^*_k(1)-\rho_k(1) \right)   \\
+    & ...  \\
+    & \rho^*_k(t) = \sum^{t-1}_{i=1} \int^i_{i-1} f(cx)dx \cdot \left(\rho^*_k(t-i)-\rho_k(t-i) \right) 
+\end{aligned}
+ \right.  
+\end{align}
+
+从而将模型一、模型二中的$\rho_k(t),\rho_k(t-1)$替换成$\rho^*_k(t),\rho^*_k(t-1)$即可.
+
+
+
+
 \subsection{模型一的调整}
 
 \section{模型分析}
 \subsection{灵敏度分析}
-qwe
+灵敏度分析是研究与分析一个模型的状态或输出变化对系统参数或周围条件变化的敏感程度的方法。
+
+在建立的模型中，共有两个超参数：？？？？？。对其分别增加1后，对模型均方误差的变化，记录下表\ref{模型灵敏度分析}。
+
+\begin{table}[H]
+\caption{模型灵敏度分析}
+\label{模型灵敏度分析}
+\centering
+\begin{tabular}{l}
+\toprule
+此表为空\\ 
+ 此表为空\\ 
+\midrule
+此表为空\\ 
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+如上表\ref{模型灵敏度分析}，超参数的微小改变仅带来因变量的微小扰动，说明模型灵敏度较好。同时超参数的增加或减小均会降低模型精确度，说明超参数已经达到最佳。
+
 
 \section{模型评价}
 \subsection{模型优缺点}
+\subsubsection{模型优点}
+\begin{itemize}
+    \item 讨论了新冠检测能力充足、有限及严重不足时的最佳混检策略，能够适应各种现实情况。
+    
+    \item 在算法的时间复杂度上，模型二较模型一更低，为$O(N)$，即线性时间复杂度，可以更快得计算得出结果。
+    
+    \item 优点3
+\end{itemize}
 
-\subsection{模型推广（？}
+\subsubsection{模型缺点}
+\begin{itemize}
+    \item 缺点1
+    
+    \item 缺点2
+    
+    \item 缺点3
+\end{itemize}
+
+
+\subsection{模型的改进与推广}
+\begin{itemize}
+    \item 推广1
+    
+    \item 推广2
+    
+    \item 推广3
+\end{itemize}
 
 
 \newpage
 
 \begin{thebibliography}{100}
+\bibitem{max_maps}
+Yelin, Idan, et al. "Evaluation of COVID-19 RT-qPCR test in multi sample pools." Clinical Infectious Diseases 71.16 (2020): 2073-2078.
 \bibitem{bib1}Christopher D Pilcher, Daniel Westreich, Michael G Hudgens, Group Testing for Severe Acute Respiratory Syndrome– Coronavirus 2 to Enable Rapid Scale-up of Testing and Real-Time Surveillance of Incidence, The Journal of Infectious Diseases, Volume 222, Issue 6, 15 September 2020, Pages 903–909
 \bibitem{bib2}郭志军.分支定界算法的MATLAB实现[J].江西教育学院学报,2007(06):4-7.
-\bibitem{bib3}https://blog.csdn.net/qq\_32211827/article/details/72970404
+\bibitem{columbia}Columbia University. COVID-19 testing program for Spring 2022. Retrieved May 3, 2022, from https://covid19.columbia.edu/content/covid-19-testing-program-spring-2022 
+
 \end{thebibliography}
 
 
@@ -956,9 +1041,9 @@ def s(x,rho,tpr,tnr,xlb,xrb):
     Args:
         x: Pool size
         rho: Prevalence in given sample
-        tpr: True positive value (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
+        tpr: True positive rate (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
              test
-        tnr: True negative value (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
+        tnr: True negative rate (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
              test
         xlb: Lower bound of the pool size, 2 by default
         xlb: Upper bound of the pool size, 32 by default
@@ -995,9 +1080,9 @@ def opts(rho,tpr,tnr,xlb=2,xrb=32):
 
     Args:
         rho: Prevalence in given sample
-        tpr: True positive value (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
+        tpr: True positive rate (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
              test
-        tnr: True negative value (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
+        tnr: True negative rate (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
              test
         xlb: Lower bound of the pool size, 2 by default
         xlb: Upper bound of the pool size, 32 by default
@@ -1008,10 +1093,7 @@ def opts(rho,tpr,tnr,xlb=2,xrb=32):
     opt_s=999
     opt_x=-1
     for i in range(xlb,xrb+1):
-        try:
-            new_s= s(i,rho,tpr,tnr,xlb,xrb)
-        except:
-            continue
+        new_s= s(i,rho,tpr,tnr,xlb,xrb)
         if(new_s<opt_s):
             opt_s=new_s
             opt_x=i
