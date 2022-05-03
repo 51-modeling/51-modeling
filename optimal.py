@@ -20,9 +20,9 @@ def s(x,rho,tpr,tnr,xlb,xrb):
     Args:
         x: Pool size
         rho: Prevalence in given sample
-        tpr: True positive value (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
+        tpr: True positive rate (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
              test
-        tnr: True negative value (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
+        tnr: True negative rate (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
              test
         xlb: Lower bound of the pool size, 2 by default
         xlb: Upper bound of the pool size, 32 by default
@@ -59,9 +59,9 @@ def opts(rho,tpr,tnr,xlb=2,xrb=32):
 
     Args:
         rho: Prevalence in given sample
-        tpr: True positive value (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
+        tpr: True positive rate (aka. sensitivity, P{TP}/(P{TP}+P{FN})) of the
              test
-        tnr: True negative value (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
+        tnr: True negative rate (aka. specificity, P{TN}/(P{TN}+P{FP})) of the
              test
         xlb: Lower bound of the pool size, 2 by default
         xlb: Upper bound of the pool size, 32 by default

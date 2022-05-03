@@ -37,7 +37,7 @@ def graph_plot(data,region,type):
     else:
         return -1
     plt.title(region+" "+type_str)
-    plt.xlabel("days since 1/22/2020")
+    plt.xlabel("days since 2022/1/26")
     plt.ylabel(type_str)
     plt.savefig("plot/"+"nyc_"+region+""+save_str)
     plt.clf()
