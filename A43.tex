@@ -1,8 +1,8 @@
 \documentclass[withoutpreface,bwprint]{cumcmthesis} %去掉封面与编号页，电子版提交的时候使用。
 
 
-%\renewcommand\thepage{\zihao{-4} ~\arabic{page}~}%字体宋体，字号小四
-%\linespread{1}%1倍行距
+\renewcommand\thepage{\zihao{-4} ~\arabic{page}~}%字体宋体，字号小四
+\linespread{1}%1倍行距
 \usepackage{booktabs}%三线表必备
 \usepackage{appendix}
 % 其他奇怪的包
@@ -25,13 +25,9 @@
       \vfil}%
   }%
 }
-\usepackage{makecell}
-\usepackage{longtable}
 
 
-
-
-\title{基于整数规划与概率分布的最优核酸混检方案}
+\title{\heiti \zihao{3}基于整数规划与概率分布的最优核酸混检方案}
 \tihao{A}
 \baominghao{43}
 \schoolname{复旦大学、Columbia University}
@@ -60,15 +56,10 @@
 
 \textbf{对于问题三：} 
 多轮混检用于处于潜伏期未被查明的阳性感染者。数据分析发现其服从$ \chi^2  \left(3.5\right)$分布\cite{wuhan}，借助已测得感染率，基于假设的潜伏期分布推得实际感染率$\rho^*$，并以此数据带入问题一的两个模型中求解相应混检样本大小。真实阳性率略大于检测阳性率，推断得出根据实际情况得出的混检策略大体相同，以美国纽约市Manhattan地区为例（2022年2月15日的预测感染率为2.20\%），此时模型给出\textbf{最佳混检样本大小为8}，\textbf{最少检测次数为446265次}。\\
-
-\textbf{关键词:}整数规划、分支界定法、混淆矩阵
+\thispagestyle{empty}
 \end{abstract}
 
-%目录  2019 明确不要目录，我觉得这个规定太好了
-\tableofcontents
-
-\newpage
-
+\setcounter{page}{1}
 \section{问题重述}
 2019 年底、2020 年初开始席卷全球的新冠疫情，给人类的生命安全带来了极
 大的威胁。为了有效控制新冠病毒的传播，核酸检测是一个非常重要而有效的手
@@ -98,15 +89,14 @@
 在模型二中，进一步将核酸检测错误率、混检的稀释作用等纳入考量，构造混淆矩阵，将诊断某一人感染情况所需检测次数的期望值作为最优混检策略的评价指标。并运用枚举法根据各地区各时间不同阳性率得到相应的不同的混检策略。
 
 \subsection{问题二分析}
-针对问题二，我们首先应寻找恰当的样本，随后利用问题一中给出的模型求解最优的混检策略。在问题一给出的两种模型中，均假设了新冠感染者的平均分布，与待检测样本相关的参数仅有平均阳性率。因此，我们找到了美国纽约市2022年1月26日至4月26日各区新冠检测阳性率数据作为样本。当地政府目前并没有疫情管制措施，但很多公司要求员工定期进行新冠检测。一些大学，例如哥伦比亚大学，更有每周随机抽检学生调研阳性率的要求\cite{columbia}。故该数据可以作为当地新冠病毒的平均感染率之合理估计。将这些数据代入建立的两个模型即可得出对应条件下建议混检方案。
+针对问题二，我们首先应寻找恰当的样本，随后利用问题一中给出的模型求解最优的混检策略。在问题一给出的两种模型中与待检测样本相关的参数仅有平均阳性率。因此，我们找到了美国纽约市2022年1月26日至4月26日各区新冠检测阳性率数据作为样本。当地政府目前并没有疫情管制措施，但很多公司要求员工定期进行新冠检测。一些大学，例如哥伦比亚大学，更有每周随机抽检学生调研阳性率的要求\cite{columbia}。故该数据可以作为当地新冠病毒的平均感染率之合理估计。将这些数据代入建立的两个模型即可得出对应条件下建议混检方案。
 
 \subsection{问题三分析}
-针对问题三，我们首先需明白多轮混检的本质意义，即：发现在过去的检测中由于处于潜伏期未被查明的阳性感染者。由于我们得到的数据往往只记录了当日查明的阳性感染者，因此当日实际的感染率比记录的数据高。所以我们进一步分布运用概率分布对“每日实际的感染率”建模，得到当日实际的感染率关于之前数日的实际的感染率的递推公式并求解。随后将该数据替换掉模型一、二中的参数“感染率”，重新求解多轮混检的最优混检策略，并将新的结果与原结果进行比较，从而得到两者的差异。
+针对问题三，我们首先需明白多轮混检的本质意义，即：发现在过去的检测中由于处于潜伏期未被查明的阳性感染者。由于我们得到的数据仅记录每日查明的感染者，因此实际的感染率比记录的数据高。故我们进一步分布运用概率分布对“每日实际的感染率”建模，得到当日实际的感染率关于之前数日的实际的感染率的递推公式并求解。随后将该数据替换掉模型一、二中的参数“感染率”，重新求解多轮混检的最优混检策略，并将新的结果与原结果进行比较，从而得到两者的差异。
 \section{模型假设}
 \begin{enumerate}
     \item 假设单只采样管最大收集样本数为32\cite{max_maps}；
     \item 假设某地区根据行政规划可划分为不同区域，区域间的感染者数是独立的；
-    \item 假设各个地区的人口数远大于单只采样管最大收集样本数；
     \item 忽略各个地区阳性感染者分布不均产生的影响；
     \item 忽略核酸检测速度。
 \end{enumerate}
@@ -125,8 +115,8 @@
         \midrule %赋予第一等级的中线
         $\Omega_k$	&第$k$个区域\\
         $x_k$  &地区$\Omega_k$混检混合样本量\\
-        $\rho_k(t)$	&第t天地区$\Omega_k$的新冠平均感染率\\
-        $\rho^*_k(t)$ &第t天地区$\Omega_k$的（考虑潜伏期后）实际新冠平均感染率 \\
+        $\rho_k(t)$	&第$t$天地区$\Omega_k$的新冠平均感染率\\
+        $\rho^*_k(t)$ &第$t$天地区$\Omega_k$的（考虑潜伏期后）实际新冠平均感染率 \\
         %$\rho_k$    &对$\rho_k(t)$的缩写（模型2） \\
         %$\rho_e$	&混检异常的情况下复检阳性的平均感染率\\
         $n_k$       &地区$\Omega_k$混检样本的大小（人口数）\\
@@ -279,7 +269,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 由于方程组\ref{naive_sol}中每个方程是独立的，不妨取$N=1$进行结果展示
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{fig_pro1.png}
+\includegraphics[width=0.5\textwidth]{fig_pro1.png}
 \caption{不同阳性率下，推荐混检混合样本量}
 \label{pro1}
 \end{figure}
@@ -325,7 +315,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
     \right.
 \end{align}
 
-如果将诸$x_k$固定，则此问题化为整数线性规划问题，可使用分支定界法求解\ref{bib20}。
+如果将诸$x_k$固定，则此问题化为整数线性规划问题，可使用分支定界法求解\cite{bib20}。
 
 取$N=2,w_0=3000,\rho_1(t-1)=0=\rho_2(t-1)=0,\rho_1(t)=0.01,\rho_2(t)=0.02$，解得：
 \begin{align*}
@@ -334,7 +324,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 由于$u_1=v_1=0$，故$x_1$不起作用，作$z$随$x_2$的变化曲线如图所示：
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{fig_pro2.png}
+\includegraphics[width=0.5\textwidth]{fig_pro2.png}
 \caption{阳性率给定，推荐混检混合样本量}
 \label{pro1}
 \end{figure}
@@ -393,7 +383,7 @@ w_k = \dfrac{\partial}{\partial x_k} \left( \sum^N_{i=1} \frac{n_i}{x_i}+ n_k\cd
 由于$u_1=v_1=0$，故$x_1$不起作用，作$z$随$x_2$的变化曲线如图所示：
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{fig_pro3.png}
+\includegraphics[width=0.5\textwidth]{fig_pro3.png}
 \caption{阳性率给定，推荐混检混合样本量}
 \label{pro1}
 \end{figure}
@@ -514,11 +504,11 @@ $\forall x_k$，成立：
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lllll}
+\begin{tabular}{ccccc}
 \toprule
-\makecell[c]{Bronx} &\makecell[c]{Brooklyn} & \makecell[c]{Manhattan} & \makecell[c]{Queens}    & \makecell[c]{Staten Island} \\
+Bronx &Brooklyn & Manhattan & Queens    & Staten Island \\
 \midrule
-\makecell[c]{1,418,207} & \makecell[c]{2,559,903} & \makecell[c]{1,628,706} & \makecell[c]{2,253,858} & \makecell[c]{476,143}     \\  
+1,418,207 & 2,559,903 & 1,628,706 & 2,253,858 &476,143     \\  
 \bottomrule
 \end{tabular}
 \caption{纽约市各区人口数}
@@ -946,7 +936,6 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
     \item 模型的参数都是基于已记录的数据和已发生的事件给出结论，不能根据数据预测未来的数据并设为新参数，因此结论只适用于过去以及短期未来，不适用于长期未来。
 \end{itemize}
 
-
 \subsection{模型的改进与推广}
 \begin{itemize}
     \item 可反向利用模型推测当然的感染率数据是否合理，比如已知地区$\Omega_k$的人口。施行多少人一混检的策略，复检资源分配情况，反推出当日的感染率。
@@ -955,7 +944,6 @@ End date   & Bronx & Brooklyn & Manhattan & Queens & Staten Island \\
     
     \item 模型鲁棒性强，其他任何流行病传染问题均都可以运用我们的模型来计算最佳混检样本数量
 \end{itemize}
-
 
 \newpage
 
@@ -974,15 +962,27 @@ Yelin, Idan, et al. "Evaluation of COVID-19 RT-qPCR test in multi sample pools."
 
 \end{thebibliography}
 
-
 \newpage
-
-
 
 \begin{appendices}
 \section{数据}
 \subsection{附录指南}
-一个表格展示附录
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+编号    & 内容        \\
+\midrule
+1.2   & 问题二、三原始数据 \\
+2.1.1 & 问题一模型一代码  \\
+2.1.2 & 问题一模型二代码  \\
+2.2.1 & 问题二模型一代码  \\
+2.2.2 & 问题二模型二代码  \\
+2.3.1 & 问题三代码    \\
+\bottomrule
+\end{tabular}
+\caption{附录指南}
+\end{table}
 
 \subsection{问题二、三原始数据}
 \begin{center}
@@ -1405,7 +1405,7 @@ opt_t=pd.DataFrame(opt_t,columns=header)
 opt_t.to_csv("nyc_optimal_test.csv",index=False)
 \end{lstlisting}
 \subsection{问题三代码}
-\subsubsection{求解实际感染率代码}
+\subsubsection{求解实际感染率}
 \begin{lstlisting}[language=matlab]
 rho_x = positive(1:91,5);
 rho_xs = rho_x;
@@ -1416,9 +1416,7 @@ for t =2:1:91
     end
 end
 \end{lstlisting}
-\subsubsection{模型一代码}
 
-\subsubsection{模型二代码}
 \begin{lstlisting}[language=python]
 """
 Sample for Q3
@@ -1477,6 +1475,7 @@ plt.legend()
 plt.savefig("plot/q3.png")
 plt.clf()
 \end{lstlisting}
+
 \end{appendices}
 
 \end{document}
